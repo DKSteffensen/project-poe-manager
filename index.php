@@ -1,7 +1,7 @@
 <?php
 
 require_once('Character.php');
-require_once('CharacterClass.php');
+require_once('classes/CharacterClasses/CharacterClass.php');
 require_once('Attributes.php');
 require_once('Ascendancy.php');
 require_once('Skill.php');
