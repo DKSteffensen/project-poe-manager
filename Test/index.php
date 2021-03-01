@@ -43,8 +43,7 @@ class Character {
     public $class;
     public $bonuses;
 
-    public function __construct(int $id) {
-        $characterData = CharacterRepository::getCharacterData($id);
+    public function __construct($characterData) {
 
         $this->name = $characterData['name'];
         $this->level = $characterData['level'];
@@ -53,8 +52,7 @@ class Character {
     }
 
     public function levelUp() {
-        $this->level + 1;
-        return $this->name . ' gained a level!';
+        return $this->level++;
     }
 }
 
@@ -75,7 +73,7 @@ class AscendancyClass extends CharacterClass {
     public $ascendancySkillPoints;
 }
 
-$character = new Character(0);
+$character = new Character(CharacterRepository::getCharacterData(0));
 echo '<pre>',var_dump($character),'</pre>';
 
 $character->levelUp();
