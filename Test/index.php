@@ -9,15 +9,14 @@ class CharacterRepository {
             case 0:
                 return [
                     'id' => 0,
+                    'user_id' => 0,
                     'name' => 'Dakrist',
-                    'level' => 83,
-                    'class' => 'Shadow',
-                    'ascendancy' => 'Assassin',
-                    'bonuses' => [
-                        'Critical Strike Chance' => 40,
-                        'Attack Speed' => 10,
-                        'Dodge Chance' => 10
-                    ]
+                    'level' => 78,
+                    'characterClass' => 'Shadow',
+                    'life' => 4550,
+                    'mana' => 1812,
+                    'icon' => 'shadow_icon.png'
+
                 ];
             case 1:
                 return [
@@ -35,47 +34,85 @@ class CharacterRepository {
         }
     }
 }
+class CharacterClass {
+
+    public $name;
+    public $life;
+    public $mana;
+    public $icon;
+
+    public function __construct($name, $life, $mana, $icon) {
+        $this->name = $name;
+        $this->life = $life;
+        $this->mana = $mana;
+        $this->icon = $icon;
+    }
+}
+
+class AscendancyClass {
+
+    public $name;
+    public $icon;
+
+    public function __construct($name, $icon) {
+        $this->name = $name;
+        $this->icon = $icon;
+    }
+
+}
 
 class Character {
 
     public $name;
     public $level;
-    public $class;
-    public $bonuses;
+    public $life;
+    public $mana;
+    public $icon;
+    //public $traits;
+    public $characterClass;
+    public $ascendancyClass;
 
-    public function __construct($characterData) {
+    public function __construct(string $name, int $level, CharacterClass $characterClass, AscendancyClass $ascendancyClass = null) {
+        $this->name = $name;
+        $this->level = $level;
+        $this->life = $characterClass->life;
+        $this->mana = $characterClass->mana;
+        $this->characterClass = $characterClass->name;
 
-        $this->name = $characterData['name'];
-        $this->level = $characterData['level'];
-        $this->class = $characterData['class'];
-        $this->bonuses = $characterData['bonuses'];
+        if ($ascendancyClass) {
+            $this->ascendancyClass = $ascendancyClass->name;
+            $this->icon = $ascendancyClass->icon;
+        }
+
+        $this->icon = $characterClass->icon;
+    }
+
+    public function attack() {
+
+    }
+
+    public function defend() {
+
     }
 
     public function levelUp() {
-        return $this->level++;
+
     }
-}
 
-class CharacterClass {
+    public function calculateLife() {
 
-    public $className;
-    public $icon;
-    public $bonuses;
-
-    public function __construct($className, $icon, $bonuses) {
-        $this->className = $className;
-        $this->icon = $icon;
-        $this->bonuses = $bonuses;
     }
+
+    public function calculateMana() {
+
+    }
+
+
 }
 
-class AscendancyClass extends CharacterClass {
-    public $ascendancySkillPoints;
-}
+$characterClass = new CharacterClass('Shadow', 52, 57, 'shadow_icon.png');
+$ascendancyClass = new AscendancyClass('Assassin', 'assassin_icon.png');
+$character = new Character('Dakrist', 78, $characterClass, $ascendancyClass);
 
-$character = new Character(CharacterRepository::getCharacterData(0));
-echo '<pre>',var_dump($character),'</pre>';
-
-$character->levelUp();
 echo '<pre>',var_dump($character),'</pre>';
 exit();
